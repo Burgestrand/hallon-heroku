@@ -1,6 +1,5 @@
 require 'bundler/setup'
 require 'sinatra'
-require 'open-uri'
 
 configure :production do
   require 'spotify-heroku'
@@ -12,7 +11,7 @@ end
 
 configure do
   require 'hallon'
-  appkey = open(ENV['HALLON_APPKEY']).read
+  appkey = IO.read('./bin/spotify_appkey.key')
   hallon = Hallon::Session.initialize(appkey, settings_path: "tmp/settings", cache_path: "tmp/spotifycache")
   hallon.login!(ENV['HALLON_USERNAME'], ENV['HALLON_PASSWORD'])
   set :hallon, hallon
