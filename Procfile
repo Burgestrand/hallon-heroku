@@ -1,1 +1,1 @@
-web: rackup -I. -p $PORT
+web: bundle exec rackup -I. -p $PORT
