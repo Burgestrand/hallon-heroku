@@ -1,25 +1,30 @@
 require 'bundler/setup'
 require 'sinatra'
-require 'spotify-heroku'
+require 'open-uri'
 require 'hallon'
-
-configure :production do
-  set :appkey, open(ENV['HALLON_APPKEY']).read
-  set :username, ENV['HALLON_USERNAME']
-  set :password, ENV['HALLON_PASSWORD']
-end
 
 configure :development do
   require 'config'
-  set :appkey, open(ENV['HALLON_APPKEY']).read
-  set :username, ENV['HALLON_USERNAME']
-  set :password, ENV['HALLON_PASSWORD']
 end
 
 configure do
-  hallon = Hallon::Session.initialize(appkey)
-  hallon.login!(username, password)
+  appkey = open(ENV['HALLON_APPKEY']).read
+  hallon = Hallon::Session.initialize(appkey, settings_path: "tmp/settings", cache_path: "tmp/spotifycache")
+  hallon.login!(ENV['HALLON_USERNAME'], ENV['HALLON_PASSWORD'])
   set :hallon, hallon
+end
+
+helpers do
+  def hallon
+    Hallon::Session.instance
+  end
+end
+
+at_exit do
+  if Hallon::Session.instance?
+    hallon = Hallon::Session.instance
+    hallon.logout!
+  end
 end
 
 get '/' do
