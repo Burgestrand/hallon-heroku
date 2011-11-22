@@ -6,7 +6,11 @@ configure :production do
 end
 
 configure :development do
-  require 'config'
+  begin
+    require 'config'
+  rescue LoadError
+    abort "You must supply your credentials, either through config.rb or the environment"
+  end unless ENV['HALLON_USERNAME'] and ENV['HALLON_PASSWORD']
 end
 
 configure do
