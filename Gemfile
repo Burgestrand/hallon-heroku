@@ -1,5 +1,5 @@
 source :rubygems
 
-gem 'hallon'
+gem 'hallon', :git => 'git://github.com/Burgestrand/Hallon.git'
 gem 'sinatra'
 gem 'foreman'
