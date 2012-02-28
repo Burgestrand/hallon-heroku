@@ -1,0 +1,31 @@
+<article class="object artist">
+  <h1>
+    <%= image_to(@portrait) if @portrait %>
+    <%= @artist.name %>
+    <small>(loaded in <%= @browse.request_duration.to_f.round(2) %>s)</small>
+  </h1>
+
+  <p>
+    <%= @tracks.map { |track| link_to track.name, track }.join(', ') %>
+  </p>
+
+  <% unless @similar_artists.empty? %>
+    <div class="clear"></div>
+    <section class="similar_artists">
+      <h2>Similar Artists</h2>
+      <p>
+        <%= @similar_artists.map { |artist| link_to artist.name, artist }.join(', ') %>
+      </p>
+    </section>
+  <% end %>
+
+  <% unless @portraits.empty? %>
+    <div class="clear"></div>
+    <section class="images">
+      <h2>Additional portraits</h2>
+      <% @portraits.each do |portrait| %>
+        <%= image_to(portrait) %>
+      <% end %>
+    </section>
+  <% end %>
+</article>

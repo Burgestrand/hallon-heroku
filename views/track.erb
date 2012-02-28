@@ -1,0 +1,12 @@
+<article class="object track">
+  <h1>
+    <%= image_to(@album.cover_link) if @album.cover_link %>
+    <%= @track.name %> <small>(<%= @length %>)</small>
+  </h1>
+  <p class="details artist">
+    by <%= link_to @artist.name, @artist %>
+  </p>
+  <p class="details album">
+    in album <%= link_to @album.name, @album %>
+  </p>
+</article>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= @title || 'Hallon Browser' %></title>
+    <style>
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      .clear { clear: both }
+
+      body
+      {
+        color: #333;
+        font: 100.01%/1.25 'Lucida Grande', 'Arial', sans-serif;
+      }
+
+      section, footer
+      {
+        margin: 0 auto;
+        position: relative;
+        width: 40em;
+      }
+
+      h1 { font-size: 1.4em }
+      h2 { font-size: 1.4em }
+
+      h1 img
+      {
+        float: left;
+        margin-right: 1em;
+      }
+
+      img
+      {
+        border: 2px solid;
+        height: 150px;
+        width: 150px;
+      }
+
+      section.images
+      {
+        text-align: center;
+      }
+
+      ul.tracks li
+      {
+        display: inline;
+      }
+
+      footer
+      {
+        border: 1px solid #DDD;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        padding: .5em;
+      }
+
+      footer p
+      {
+        font-size: 0.8em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <%= yield %>
+      <div class="clear"></div>
+    </section>
+    <footer>
+      <p>
+        Powered by <a href="http://github.com/Burgestrand/Hallon">Hallon</a>,
+        see <a href="https://github.com/Burgestrand/hallon-heroku">hallon-heroku</a> for the source code for this website.
+      </p>
+    </footer>
+  </body>
+</html>
