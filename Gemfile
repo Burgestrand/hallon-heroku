@@ -2,4 +2,8 @@ source :rubygems
 
 gem 'hallon', :git => 'git://github.com/Burgestrand/Hallon.git'
 gem 'sinatra'
-gem 'foreman'
+
+group :development do
+  gem 'heroku'
+  gem 'foreman'
+end
