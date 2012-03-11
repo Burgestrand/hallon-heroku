@@ -40,6 +40,15 @@ helpers do
   def image_to(image_link)
     %Q{<img src="/#{image_link.to_str}" class="#{image_link.type}">}
   end
+
+  def logged_in_text
+    if hallon.logged_in?
+      user = hallon.user.load
+      "logged in as #{link_to user.name, user}"
+    else
+      "lot logged in"
+    end
+  end
 end
 
 at_exit do
@@ -66,11 +75,26 @@ error Hallon::TimeoutError do
 end
 
 get '/' do
-  if hallon.logged_in?
-    "Logged in as #{hallon.user.name}."
-  else
-    "Not logged in."
-  end
+  @objects = [
+    Hallon::Track.new("spotify:track:4d8EFwexIj2rtX4fIT2l8Q").load,
+    Hallon::Artist.new("spotify:artist:6aZyMrc4doVtZyKNilOmwu").load,
+    Hallon::Album.new("spotify:album:6cBZCIlOJCDC1Eh54aJDme").load,
+    Hallon::User.new("burgestrand").load,
+  ]
+
+  erb :index
+end
+
+get '/redirect_to' do
+  link = Hallon::Link.new(params[:spotify_uri])
+  redirect to("/#{link.to_uri}"), :see_other
+end
+
+get uri_for(:profile) do |user|
+  @user = Hallon::User.new(user).load
+  @starred = @user.starred.load
+  @starred_tracks = @starred.tracks[0, 20].map(&:load)
+  erb :user
 end
 
 get uri_for(:track) do |track|

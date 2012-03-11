@@ -1,0 +1,19 @@
+<h1>
+  Hallon browser
+</h1>
+
+<p>
+  This little application allows you to browse information in Spotify from
+  their Spotify URIs. Enter a Spotify URI into the search box above to view
+  information about that particular URI.
+</p>
+
+<p>
+  You may also try clicking one of these links.
+</p>
+
+<ul>
+  <% @objects.each do |object| %>
+    <li><%= link_to object.to_str, object %></li>
+  <% end %>
+</ul>

@@ -3,6 +3,9 @@ It uses [Hallon](https://github.com/Burgestrand/Hallon), [libspotify](http://dev
 and [Sinatra](http://www.sinatrarb.com/). What it does is that it logs in to Spotify on startup, and then tells you if it’s logged in or not
 on start page.
 
+It also allows you to browse objects pointed to by Spotify URIs. All pages have a "Go to" box that allows you to paste in a Spotify URI to
+view details about it.
+
 ## How to get it running
 You’ll need your Spotify Premium Account credentials and a [Spotify Application Key](https://developer.spotify.com/en/libspotify/application-key/).
 Put the application key in `bin/spotify_appkey.key` and your credentials in your environment variables:

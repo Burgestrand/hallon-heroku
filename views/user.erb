@@ -1,0 +1,15 @@
+<article class="object user">
+  <h1>
+    <%= @user.name %> <small>(<%= @user.display_name %>)</small>
+  </h1>
+
+  <% unless @starred_tracks.empty? %>
+    <div class="clear"></div>
+    <section class="starred tracks">
+      <h2>Starred Tracks</h2>
+      <p>
+        <%= @starred_tracks.map { |track| link_to track.name, track }.join(', ') %>
+      </p>
+    </section>
+  <% end %>
+</article>

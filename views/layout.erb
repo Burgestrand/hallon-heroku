@@ -14,11 +14,66 @@
         font: 100.01%/1.25 'Lucida Grande', 'Arial', sans-serif;
       }
 
-      section, footer
+      body > nav, section, footer
       {
         margin: 0 auto;
         position: relative;
         width: 40em;
+      }
+
+      nav
+      {
+        border-bottom: 1px solid #DDD;
+        text-align: right;
+        padding: 1em 0 .5em;
+      }
+
+      nav h1
+      {
+        float: left;
+        font-size: 1em;
+        margin: 0;
+      }
+
+      nav h1 a
+      {
+        border-bottom: 1px dotted;
+        color: #DDD;
+        font-weight: normal;
+        text-decoration: none;
+      }
+
+      nav h1 a:hover
+      {
+        border: 0;
+      }
+
+      nav input
+      {
+        position: relative;
+        top: -.2em;
+      }
+
+      nav input
+      {
+        display: inline-block;
+        height: 2em;
+        padding: .4em .5em;
+      }
+
+      nav input[type="text"]
+      {
+        border: 1px solid #DDD;
+        border-radius: .2em;
+        font: inherit;
+        font-family: monospace;
+        padding: .4em .5em;
+        width: 23.5em;
+      }
+
+      nav + section
+      {
+        clear: both;
       }
 
       h1 { font-size: 1.4em }
@@ -60,9 +115,22 @@
         font-size: 0.8em;
         text-align: center;
       }
+
+      footer .details
+      {
+        color: #999;
+      }
     </style>
   </head>
   <body>
+    <nav>
+    <h1><a href="/">Hallon browser</a></h1>
+      <form action="/redirect_to" method="get">
+        <label for="spotify_uri">Enter a Spotify URI: </label>
+        <input type="text" id="spotify_uri" name="spotify_uri" />
+        <input type="submit" value="Go" />
+      </form>
+    </nav>
     <section>
       <%= yield %>
       <div class="clear"></div>
@@ -71,6 +139,9 @@
       <p>
         Powered by <a href="http://github.com/Burgestrand/Hallon">Hallon</a>,
         see <a href="https://github.com/Burgestrand/hallon-heroku">hallon-heroku</a> for the source code for this website.
+      </p>
+      <p class="details">
+        <small>(<%= logged_in_text %>)</small>
       </p>
     </footer>
   </body>
