@@ -73,16 +73,16 @@ get '/' do
   end
 end
 
-get uri_for(:track) do |uri|
-  @track  = Hallon::Track.new(uri).load
+get uri_for(:track) do |track|
+  @track  = Hallon::Track.new(track).load
   @artist = @track.artist.load
   @album  = @track.album.load
   @length = Time.at(@track.duration).gmtime.strftime("%M:%S")
   erb :track
 end
 
-get uri_for(:artist) do |uri|
-  @artist    = Hallon::Artist.new(uri).load
+get uri_for(:artist) do |artist|
+  @artist    = Hallon::Artist.new(artist).load
   @browse    = @artist.browse.load
   @portraits = @browse.portrait_links.to_a
   @portrait  = @portraits.shift
@@ -90,6 +90,16 @@ get uri_for(:artist) do |uri|
   @similar_artists = @browse.similar_artists.to_a
   @similar_artists.each(&:load)
   erb :artist
+end
+
+get uri_for(:album) do |album|
+  @album  = Hallon::Album.new(album).load
+  @browse = @album.browse.load
+  @cover  = @album.cover_link
+  @artist = @album.artist.load
+  @tracks = @browse.tracks[0, 20].map(&:load)
+  @review = @browse.review
+  erb :album
 end
 
 get uri_for(:image) do |img|

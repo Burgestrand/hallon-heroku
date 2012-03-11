@@ -1,0 +1,25 @@
+<article class="object album">
+  <h1>
+    <%= image_to(@cover) if @cover %>
+    <%= @album.name %>
+    <small>(loaded in <%= @browse.request_duration.to_f.round(2) %>s)</small>
+  </h1>
+
+  <p class="details artist">
+    by <%= link_to @artist.name, @artist %>
+  </p>
+
+  <p class="details review">
+    <%= @review %>
+  </p>
+
+  <% unless @tracks.empty? %>
+    <div class="clear"></div>
+    <section class="tracks">
+      <h2>Tracks</h2>
+      <p>
+        <%= @tracks.map { |track| link_to track.name, track }.join(', ') %>
+      </p>
+    </section>
+  <% end %>
+</article>
