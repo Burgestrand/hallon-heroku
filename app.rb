@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/reloader' if development?
 
 configure :production do
   require 'spotify-heroku'
@@ -14,13 +15,16 @@ configure :development do
 end
 
 configure do
-  require 'hallon'
-  appkey = IO.read('./bin/spotify_appkey.key')
-  hallon = Hallon::Session.initialize(appkey)
-  hallon.login!(ENV['HALLON_USERNAME'], ENV['HALLON_PASSWORD'])
-  set :hallon, hallon
+  $hallon ||= begin
+    require 'hallon'
+    appkey = IO.read('./bin/spotify_appkey.key')
+    Hallon.load_timeout = 10
+    Hallon::Session.initialize(appkey).tap do |hallon|
+      hallon.login!(ENV['HALLON_USERNAME'], ENV['HALLON_PASSWORD'])
+    end
+  end
 
-  Hallon.load_timeout = 10
+  set :hallon, $hallon
 end
 
 helpers do
