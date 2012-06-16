@@ -25,6 +25,9 @@ configure do
   end
 
   set :hallon, $hallon
+
+  # Allow iframing
+  disable :protection
 end
 
 helpers do
