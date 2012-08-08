@@ -2,10 +2,6 @@ require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
-configure :production do
-  require 'spotify-heroku'
-end
-
 configure :development do
   begin
     require 'config'
