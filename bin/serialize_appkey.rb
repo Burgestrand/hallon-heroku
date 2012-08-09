@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 #
-# Given a spotify appkey, it will be serialized into it’s hexadecimal form.
-# If you want to add your appkey to an environment variable it will not be
-# possible because the appkey might contain null bytes, but in hexadecimal
-# form you can!
+# Encodes a Spotify application key into base64 for safe usage in environment
+# variables. This is needed because the application key usually contain null
+# bytes, and those cannot be put in environment variables on many systems.
 #
 # Assuming you set the ENV['SPOTIFY_APPKEY'] to your application key, you
 # can read it out in a form that Hallon can use with this snippet:
 #
+#   require 'base64'
 #   appkey = Base64.decode64(ENV['SPOTIFY_APPKEY'])
 require 'base64'
 
