@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/Burgestrand/Hallon.git
-  revision: a1f7184190fff769d8a20919287dfdf3b59ff628
+  revision: 83af86e36aefb802fd01906bc21a4fd516cc603a
   specs:
     hallon (0.18.0)
       ref (~> 1.0)
