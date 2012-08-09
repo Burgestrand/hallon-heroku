@@ -7,11 +7,17 @@ It also allows you to browse objects pointed to by Spotify URIs. All pages have 
 view details about it.
 
 ## How to get it running
-You’ll need your Spotify Premium Account credentials and a [Spotify Application Key](https://developer.spotify.com/en/libspotify/application-key/).
-Put the application key in `bin/spotify_appkey.key` and your credentials in your environment variables:
+You’ll need your Spotify Premium Account credentials and a [Spotify Application Key](https://developer.spotify.com/technologies/libspotify/keys/).
+Now, put all your credentials in your environment variables:
 
     export HALLON_USERNAME='your_username'
     export HALLON_PASSWORD='your_password'
+
+Your application key needs special consideration, since it may contain special characters. It needs to
+be encoded into base64 before putting it in the environment variable. Luckily, there is a ruby script
+in `bin/serialize_appkey.rb` that will do this for you.
+
+    export HALLON_APPKEY="$(ruby bin/serialize_appkey.rb /path/to/appkey.rb)"
 
 After this, you’ll want to download the dependencies:
 
@@ -29,6 +35,7 @@ Create an application on Heroku, push the application to it, add your Spotify cr
 
     heroku config:add HALLON_USERNAME='your_username'
     heroku config:add HALLON_PASSWORD='your_password'
+    heroku config:add HALLON_APPKEY="$(ruby bin/serialize_appkey.rb /path/to/appkey.rb)"
 
 That’s all there should be to it. Now open it with `heroku open`!
 

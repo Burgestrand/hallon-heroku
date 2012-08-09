@@ -1,22 +1,25 @@
 require 'bundler/setup'
+require 'base64'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
-configure :development do
-  begin
-    require 'config'
-  rescue LoadError
-    abort "You must supply your credentials, either through config.rb or the environment"
-  end unless ENV['HALLON_USERNAME'] and ENV['HALLON_PASSWORD']
+class ConfigurationError < StandardError
+end
+
+def env(varname)
+  ENV.fetch(varname) do
+    raise ConfigurationError, "Missing ENV['#{varname}']."
+  end
 end
 
 configure do
   $hallon ||= begin
     require 'hallon'
-    appkey = IO.read('./bin/spotify_appkey.key')
     Hallon.load_timeout = 10
+
+    appkey = Base64.decode64(env('HALLON_APPKEY'))
     Hallon::Session.initialize(appkey).tap do |hallon|
-      hallon.login!(ENV['HALLON_USERNAME'], ENV['HALLON_PASSWORD'])
+      hallon.login!(env('HALLON_USERNAME'), env('HALLON_PASSWORD'))
     end
   end
 
