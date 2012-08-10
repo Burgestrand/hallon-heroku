@@ -54,7 +54,7 @@ helpers do
   end
 
   def image_to(image_link)
-    %Q{<img src="/#{image_link.to_str}" class="#{image_link.type}">}
+    link_to %Q{<img src="/#{image_link.to_str}" class="#{image_link.type}">}, image_link
   end
 
   def logged_in_text
