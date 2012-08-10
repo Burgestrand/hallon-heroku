@@ -91,11 +91,12 @@ error Hallon::TimeoutError do
 end
 
 get '/' do
-  @objects = [
-    Hallon::Track.new("spotify:track:4d8EFwexIj2rtX4fIT2l8Q").load,
-    Hallon::Artist.new("spotify:artist:6aZyMrc4doVtZyKNilOmwu").load,
-    Hallon::Album.new("spotify:album:6cBZCIlOJCDC1Eh54aJDme").load,
-    Hallon::User.new("burgestrand").load,
+  @links = [
+    Hallon::Link.new("spotify:track:4d8EFwexIj2rtX4fIT2l8Q"),
+    Hallon::Link.new("spotify:artist:6aZyMrc4doVtZyKNilOmwu"),
+    Hallon::Link.new("spotify:album:6cBZCIlOJCDC1Eh54aJDme"),
+    Hallon::Link.new("spotify:user:burgestrand"),
+    Hallon::Link.new("spotify:user:burgestrand:playlist:5BwQBlDoZVoNnDItvO2IUb")
   ]
 
   erb :index
