@@ -103,8 +103,8 @@ get '/' do
 end
 
 get '/redirect_to' do
-  link = Hallon::Link.new(params[:spotify_uri])
-  redirect to("/#{link.to_uri}"), :see_other
+  href = params[:spotify_uri] if Hallon::Link.valid?(params[:spotify_uri])
+  redirect to("/#{href}"), :see_other
 end
 
 get uri_for(:profile) do |user|
