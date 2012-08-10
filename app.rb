@@ -3,6 +3,17 @@ require 'base64'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
+unless "".respond_to?(:try)
+  class Object
+    alias_method :try, :send
+  end
+
+  class NilClass
+    def try(*)
+    end
+  end
+end
+
 class ConfigurationError < StandardError
 end
 
@@ -34,9 +45,12 @@ helpers do
     Hallon::Session.instance
   end
 
-  def link_to(text, object)
-    link = object.to_link
-    %Q{<a class="#{link.type}" href="/#{link.to_uri}">#{text}</a>}
+  def link_to(text, object = text)
+    link = object
+    link = link.to_link if link.respond_to?(:to_link)
+    href = link.try(:to_str)
+    type = link.try(:type)
+    %Q{<a class="#{type}" href="/#{object.to_str}">#{text}</a>}
   end
 
   def image_to(image_link)
