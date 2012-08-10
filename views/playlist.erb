@@ -1,0 +1,23 @@
+<article class="object playlist">
+  <h1><%= @playlist.name %> <small>(by <%= link_to @owner.name, @owner %>)</small></h1>
+  <p class="details">
+    <% @playlist.subscribers.join(', ') %>
+    <strong>
+      <%= @playlist.total_subscribers %> subscribers in total.
+    </strong>
+  </p>
+
+  <% unless @tracks.empty? %>
+    <ul class="tracks">
+      <% @tracks.each do |track| %>
+        <li>
+          <%= link_to "#{track.name}", track %>
+          in
+          <%= link_to "#{track.album.name}", track.album %><br>
+          by
+          <%= link_to "#{track.artist.name}", track.artist %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</article>

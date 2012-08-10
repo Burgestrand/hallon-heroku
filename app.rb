@@ -148,3 +148,12 @@ get uri_for(:image) do |img|
   headers "Content-Type" => "image/#{image.format}"
   image.data
 end
+
+get uri_for(:playlist) do |playlist|
+  @playlist = Hallon::Playlist.new(playlist).load
+  @playlist.update_subscribers
+  @owner    = @playlist.owner.load
+  @tracks   = @playlist.tracks.to_a
+  @tracks.each(&:load)
+  erb :playlist
+end
