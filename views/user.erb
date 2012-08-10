@@ -1,15 +1,28 @@
 <article class="object user">
   <h1>
-    <%= @user.name %> <small>(<%= @user.display_name %>)</small>
+    <%= @user.display_name %> <small>(<%= @user.name %>)</small>
   </h1>
 
   <% unless @starred_tracks.empty? %>
     <div class="clear"></div>
     <section class="starred tracks">
-      <h2>Starred Tracks</h2>
+      <h2>Starred tracks</h2>
       <p>
         <%= @starred_tracks.map { |track| link_to track.name, track }.join(', ') %>
       </p>
     </section>
   <% end %>
+
+  <section class="published playlists">
+    <h2>Published playlists</h2>
+    <% unless @playlists.empty? %>
+      <ul>
+        <% @playlists.each do |playlist| %>
+          <% next if playlist.to_link.nil? # starred, inbox? %>
+          <li><%= link_to "#{playlist.name} (#{playlist.size})", playlist %></li>
+        <% end %>
+      </ul>
+    <% else %>
+    <% end %>
+  </section>
 </article>

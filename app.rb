@@ -111,6 +111,8 @@ get uri_for(:profile) do |user|
   @user = Hallon::User.new(user).load
   @starred = @user.starred.load
   @starred_tracks = @starred.tracks[0, 20].map(&:load)
+  @playlists = @user.published.contents.select { |x| x.is_a?(Hallon::Playlist) }
+  @playlists.each(&:load)
   erb :user
 end
 
