@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'bundler/setup'
 require 'base64'
 require 'sinatra'
@@ -38,6 +39,8 @@ configure do
 
   # Allow iframing
   disable :protection
+  # Only one request at a time
+  enable :lock
 end
 
 helpers do
