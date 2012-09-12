@@ -18,7 +18,7 @@ end
 class ConfigurationError < StandardError
 end
 
-def env(varname)
+def config_env(varname)
   ENV.fetch(varname) do
     raise ConfigurationError, "Missing ENV['#{varname}']."
   end
@@ -29,10 +29,8 @@ configure do
     require 'hallon'
     Hallon.load_timeout = 10
 
-    appkey = Base64.decode64(env('HALLON_APPKEY'))
-    Hallon::Session.initialize(appkey).tap do |hallon|
-      hallon.login!(env('HALLON_USERNAME'), env('HALLON_PASSWORD'))
-    end
+    appkey = Base64.decode64(config_env('HALLON_APPKEY'))
+    Hallon::Session.initialize(appkey)
   end
 
   set :hallon, $hallon
@@ -65,7 +63,7 @@ helpers do
       user = hallon.user.load
       "logged in as #{link_to user.name, user}"
     else
-      "lot logged in"
+      "not logged in"
     end
   end
 end
@@ -91,6 +89,12 @@ end
 error Hallon::TimeoutError do
   status 504
   body "Hallon timed out."
+end
+
+before do
+  unless hallon.logged_in?
+    hallon.login!(config_env('HALLON_USERNAME'), config_env('HALLON_PASSWORD'))
+  end
 end
 
 get '/' do
