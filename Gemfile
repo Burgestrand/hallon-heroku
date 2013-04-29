@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'hallon', github: 'Burgestrand/Hallon'
+gem 'hallon', '~> 0.18.2'
 gem 'sinatra'
 
 group :development do
